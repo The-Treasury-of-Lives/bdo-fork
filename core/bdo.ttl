@@ -25,7 +25,7 @@
 
 @prefix : <http://purl.bdrc.io/ontology/core/> .
 @prefix adm: <http://purl.bdrc.io/ontology/admin/> .
-@prefix bda: <http://purl.bdrc.io/admin.data/> .
+@prefix bda: <http://purl.bdrc.io/admindata/> .
 @prefix bdg: <http://purl.bdrc.io/graph/> .
 @prefix bdo: <http://purl.bdrc.io/ontology/core/> .
 @prefix bdr: <http://purl.bdrc.io/resource/> .
@@ -84,7 +84,7 @@ bdo:Agent
 bdo:AgentAsCreator
 	a owl:Class ;
 	rdfs:subClassOf bdo:AgentInRole ;
-	rdfs:label "agent as creator"@en ;
+	rdfs:label "creator"@en ;
 	adm:technicalComment ":AgentAsCreator has :role that is restricted to instances of :Creator (rdfs:subClassOf :Role)"@en ;
 	adm:userTooltip "An agent as creator establishes a given Agent performing some cretation rolw w.r.t. a Work"@en ;
 	.
@@ -170,7 +170,7 @@ bdo:BundleInstance
 bdo:CarvedEvent
 	a owl:Class ;
 	rdfs:subClassOf bdo:InstanceEvent ;
-	rdfs:label "Work carved"@en ;
+	rdfs:label "Carved"@en ;
 	adm:userTooltip "The event of carving a work (in woodblocks, stone, etc.)"@en ;
 	.
 
@@ -638,41 +638,6 @@ bdo:ItemPhysicalAsset
 	a owl:Class ;
 	rdfs:subClassOf bdo:Item ;
 	rdfs:label "Physical item"@en ;
-	adm:technicalComment """A ItemPhysicalAsset refers to the library Place which has one or more physical copies of the  catalogued Work and shows the number of copies that are held at the library. The :itemShelf is the Library's shelving information concerning the location in the library of the physical copies. The exception is an optional note regarding missing volumes in a copy or other information such as may  be useful to qualify the status of one or more copies.
-
-Examples:
-
-bdr:W1TLMTGA000883 a :Work ;
-       :workHasItem bdr:IW1TLMTGA000883_01, bdr:IW1TLMTGA000883_02 .
-
-bdr:IW1TLMTGA000883_01 a :ItemPhysicalAsset ;
-       :itemLibrary bdr:G1TLMTGA000001 ;
-       :itemCopies 1 ;
-       :itemShelf \"ཇ|ཇ|༣||001278\" .
-
-bdr:IW1TLMTGA000883_02 a :ItemPhysicalAsset ;
-       :itemLibrary bdr:G1TLMTGB000001 ;
-       :itemCopies 1 ;
-       :itemShelf \"ག|༦|||000026\" .
-
-
-bdr:W20907 a :Work ;
-      :workHasItem bdr:IW20907_02 .
-
-bdr:IW20907_02 a :ItemPhysicalAsset ;
-       :itemLibrary bdr:G1TLMTGA000001 ;
-       :itemCopies 1 ;
-       :itemShelf \"ཉ|༣|||000567\" .
-
-
-bdr:W1KG20928 a :Work ;
-       :workHasItem bdr:IW1KG20928_02 .
-
-bdr:IW1KG20928_02 a :ItemPhysicalAsset ;
-       :itemLibrary bdr:G1TLMTGA000001 ;
-       :itemCopies 1 ;
-       :itemShelf \"ཉ|༣|||001811\" ;
-       :itemException \"དེབ་གཅིག་ཕྱི་ལ་གཡར་ནས་མ་འབྱོར\"@bo ."""@en ;
 	adm:userTooltip "A item comprised of a physical volume or volumes."@en ;
 	.
 
@@ -827,6 +792,36 @@ bdo:Note
 	adm:userTooltip "A comment about the subject resource, possibly with a source Work and a location in the Work"@en ;
 	.
 
+bdo:OPFOCRBatch
+	a owl:DatatypeProperty ;
+	rdfs:label "OCR batch"@en ;
+	.
+
+bdo:OPFOCRSoftware
+	a owl:DatatypeProperty ;
+	rdfs:label "OCR software"@en ;
+	.
+
+bdo:OPFOCRSource
+	a owl:DatatypeProperty ;
+	rdfs:label "Source for the OCR"@en ;
+	.
+
+bdo:OPFOCRTimeStamp
+	a owl:DatatypeProperty ;
+	rdfs:label "OCR date"@en ;
+	.
+
+bdo:OPFOCRWordMeanConfidenceIndex
+	a owl:DatatypeProperty ;
+	rdfs:label "Mean OCR confidence index"@en ;
+	.
+
+bdo:OPFOCRWordMedianConfidenceIndex
+	a owl:DatatypeProperty ;
+	rdfs:label "Median OCR confidence index"@en ;
+	.
+
 bdo:ObjectType
 	a owl:Class ;
 	rdfs:subClassOf bdo:Type ;
@@ -866,6 +861,12 @@ bdo:OtherTitle
 	rdfs:label "Other Title"@en ;
 	adm:catalogingConvention "when a work is known by different titles, the main one is recorded by :WorkBibliographicalTitle and the others with :WorkOtherTitle. This should mainly be used with abstract works."@en ;
 	adm:userTooltip "Title that a work is known by other than one of the defined title types"@en ;
+	.
+
+bdo:Outline
+	a owl:Class ;
+	rdfs:subClassOf bdo:Entity ;
+	rdfs:label "Outline"@en ;
 	.
 
 bdo:PaginationType
@@ -1782,6 +1783,22 @@ bdo:colophon
 	rdfs:range rdf:langString ;
 	.
 
+bdo:conditionGrade
+	a owl:DatatypeProperty ;
+	rdfs:label "condition grade"@en ;
+	adm:userTooltip "condition of the physical object (0 is nearly completely destroyed, 5 is perfect condition)"@en ;
+	rdfs:domain bdo:Instance ;
+	rdfs:range xsd:integer ;
+	.
+
+bdo:contentHeight
+	a owl:DatatypeProperty ;
+	rdfs:label "content height"@en ;
+	adm:userTooltip "height of the content (printed area) in cm"@en ;
+	rdfs:domain bdo:PhysicalInstance ;
+	rdfs:range xsd:string ;
+	.
+
 bdo:contentLocation
 	a owl:ObjectProperty ;
 	rdfs:label "location"@en ;
@@ -1989,11 +2006,34 @@ bdo:contentPagination
 	rdfs:seeAlso bdo:PaginationType ;
 	.
 
+bdo:contentWidth
+	a owl:DatatypeProperty ;
+	rdfs:label "content width"@en ;
+	adm:userTooltip "width of the content (printed area) in cm"@en ;
+	rdfs:domain bdo:PhysicalInstance ;
+	rdfs:range xsd:string ;
+	.
+
 bdo:conversionOf
 	a owl:ObjectProperty ;
 	rdfs:subPropertyOf bdo:labelConnection ;
 	rdfs:label "conversion of"@en ;
 	adm:userTooltip "This label is a conversion of the object label from one orthographic form to another in the same language, e.g., Khmer"@en ;
+	.
+
+bdo:copyrightStatus
+	a owl:ObjectProperty ;
+	rdfs:label "copyright status"@en ;
+	rdfs:domain bdo:BiblioEntity ;
+	rdfs:range bdo:CopyrightStatus ;
+	.
+
+bdo:corporation
+	a owl:ObjectProperty ;
+	rdfs:label "associated corporation"@en ;
+	adm:userTooltip "Indicates a Corporation that is associated with the subject."@en ;
+	rdfs:domain bdo:PersonEvent ;
+	rdfs:range bdo:Corporation ;
 	.
 
 bdo:corporationHasMember
@@ -2723,6 +2763,15 @@ bdo:hasOlderSister
 	skos:definition "Indicates an older sister of the person"@en ;
 	.
 
+bdo:hasOutline
+	a owl:ObjectProperty ;
+	rdfs:label "outline"@en ;
+	adm:translationPriority "2"^^xsd:integer ;
+	rdfs:domain bdo:BiblioEntity ;
+	rdfs:range bdo:Outline ;
+	owl:inverseOf bdo:outlineOf ;
+	.
+
 bdo:hasParent
 	a owl:ObjectProperty ;
 	rdfs:subPropertyOf bdo:kinWith ;
@@ -3270,6 +3319,7 @@ bdo:itemCopies
 	rdfs:domain bdo:ItemPhysicalAsset ;
 	rdfs:range xsd:string ;
 	rdfs:seeAlso bdo:ItemPhysicalAsset ;
+	owl:deprecated "true"^^xsd:boolean ;
 	.
 
 bdo:itemException
@@ -3290,6 +3340,7 @@ bdo:itemForInstance
 	bdo:inferSubTree "true"^^xsd:boolean ;
 	rdfs:domain bdo:Item ;
 	rdfs:range bdo:PhysicalInstance ;
+	owl:deprecated "true"^^xsd:boolean ;
 	owl:inverseOf bdo:instanceHasItem ;
 	.
 
@@ -3300,6 +3351,7 @@ bdo:itemLibrary
 	rdfs:domain bdo:ItemPhysicalAsset ;
 	rdfs:range bdo:Place ;
 	rdfs:seeAlso bdo:ItemPhysicalAsset ;
+	owl:deprecated "true"^^xsd:boolean ;
 	.
 
 bdo:itemMissingVolumes
@@ -3321,6 +3373,7 @@ bdo:itemShelf
 	rdfs:domain bdo:ItemPhysicalAsset ;
 	rdfs:range xsd:string ;
 	rdfs:seeAlso bdo:ItemPhysicalAsset ;
+	owl:deprecated "true"^^xsd:boolean ;
 	.
 
 bdo:itemVolumes
@@ -3641,6 +3694,15 @@ bdo:onYear
 	rdfs:range xsd:gYear ;
 	.
 
+bdo:outlineOf
+	a owl:ObjectProperty ;
+	rdfs:label "outline of"@en ;
+	adm:translationPriority "2"^^xsd:integer ;
+	rdfs:domain bdo:Outline ;
+	rdfs:range bdo:BiblioEntity ;
+	owl:inverseOf bdo:hasOutline ;
+	.
+
 bdo:ownershipStatement
 	a owl:DatatypeProperty ;
 	rdfs:label "authorship statement"@en ;
@@ -3665,6 +3727,13 @@ bdo:paginatedBy
 	rdfs:domain bdo:TextualEntity ;
 	rdfs:range bdo:Item ;
 	owl:deprecated "true"^^xsd:boolean ;
+	.
+
+bdo:paginationExtentStatement
+	a owl:DatatypeProperty ;
+	rdfs:label "pagination extent"@en ;
+	adm:userTooltip "Indicates the range of paginations actually present in the instance"@en ;
+	rdfs:range xsd:string ;
 	.
 
 bdo:partIndex
@@ -3779,6 +3848,7 @@ bdo:personEventCorporation
 	adm:userTooltip "Indicates a Corporation that is associated with the subject Event."@en ;
 	rdfs:domain bdo:PersonEvent ;
 	rdfs:range bdo:Corporation ;
+	owl:deprecated "true"^^xsd:boolean ;
 	.
 
 bdo:personEventRole
@@ -3844,7 +3914,7 @@ bdo:personTeacherOf
 
 bdo:placeAccuracy
 	a owl:DatatypeProperty ;
-	rdfs:label "accuracy"@en ;
+	rdfs:label "coordinates accuracy"@en ;
 	adm:translationPriority "2"^^xsd:integer ;
 	adm:userTooltip "The accuracy of the latitude and longitude"@en ;
 	rdfs:domain bdo:Place ;
@@ -4037,11 +4107,27 @@ bdo:qualityGrade
 	rdfs:range xsd:integer ;
 	.
 
+bdo:readabilityGrade
+	a owl:DatatypeProperty ;
+	rdfs:label "readability grade"@en ;
+	adm:userTooltip "readability of the physical object, can represent the quality of the handwriting, the quality of printing, etc. Goes from 0 (almost impossible to read) to 5 (perfectly readable)."@en ;
+	rdfs:domain bdo:Instance ;
+	rdfs:range xsd:integer ;
+	.
+
 bdo:reproductionPrintMethod
 	a owl:ObjectProperty ;
 	rdfs:label "print method of the reproduction"@en ;
 	rdfs:domain bdo:Instance ;
 	rdfs:range bdo:PrintMethod ;
+	.
+
+bdo:reproductionQualityGrade
+	a owl:DatatypeProperty ;
+	rdfs:label "reproduction quality grade"@en ;
+	adm:userTooltip "Quality of the reproduction (microfilm, lithography, scan, etc.), grade between 1 and 5."@en ;
+	rdfs:domain bdo:Instance ;
+	rdfs:range xsd:integer ;
 	.
 
 bdo:restored
